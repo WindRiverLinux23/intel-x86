@@ -35,7 +35,7 @@ EXTRA_OEMAKE = '\
 # into the dbg rpm.  STAGING_KERNEL_DIR will exist by the time
 # do_configure() is invoked so we can safely copy from it.
 #
-do_configure_prepend() {
+do_configure:prepend() {
 	mkdir -p ${S}
 	cp -r ${STAGING_KERNEL_DIR}/tools/thermal/tmon/* ${S}
 	cp ${STAGING_KERNEL_DIR}/LICENSES/preferred/GPL-2.0 ${S}/COPYING
