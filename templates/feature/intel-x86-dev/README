@@ -10,5 +10,4 @@ To use this feature, add
 
 #@TYPE: Wrtemplate
 #@NAME: intel-x86-dev
-#@DESCRIPTION: Install "require" features together such as:
-	       edac/kdump/intel-qat/intel-sst ... to rootfs or image.
+#@DESCRIPTION: Install "require" features together such as: edac/kdump/intel-qat/intel-sst ... to rootfs or image.
