@@ -1,3 +1,4 @@
 require linux-yocto-intel-x86.inc
 
-KBRANCH:intel-x86  = "standard/x86"
+LINUX_VERSION:intel-x86 = "5.16+"
+KBRANCH:intel-x86  = "v5.16/standard/x86"
