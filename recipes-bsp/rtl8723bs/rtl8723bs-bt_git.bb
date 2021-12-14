@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/GPL-2.0-only;md5=801f80980d171d
 
 RDEPENDS:${PN} = "bash"
 
-SRC_URI += "git://github.com/lwfinger/rtl8723bs_bt.git \
+SRC_URI += "git://github.com/lwfinger/rtl8723bs_bt.git;protocol=https;branch=master \
 	   "
 SRCREV = "07cda47e386f7bece859323f55b5a6a0df51c63b"	
 S = "${WORKDIR}/git"
