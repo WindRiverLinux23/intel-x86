@@ -6,7 +6,7 @@ SUMMARY = "A Monitoring and Testing Tool for Linux kernel thermal subsystem"
 DESCRIPTION = "TMON is conceived as a tool to help visualize, tune, and \
 test the complex thermal subsystem"
 
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=e6a75371ba4d16749254a51215d13f97"
 
 PR = "r0"

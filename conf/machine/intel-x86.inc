@@ -25,14 +25,14 @@ MACHINE_EXTRA_RRECOMMENDS += "linux-firmware-ice"
 MACHINE_EXTRA_RRECOMMENDS += "linux-firmware-iwlwifi-misc"
 MACHINE_EXTRA_RRECOMMENDS += "linux-firmware-ibt-misc"
 
-EFI_PROVIDER ?= "${@bb.utils.contains('INCOMPATIBLE_LICENSE', 'GPLv3', 'systemd-boot', 'grub-efi', d)}"
+EFI_PROVIDER ?= "${@bb.utils.contains('INCOMPATIBLE_LICENSE', 'GPL-3.0-only', 'systemd-boot', 'grub-efi', d)}"
 
 # grub-efi is depended in wic.bbclass, remove it to aviod depency error.
-WKS_FILE_DEPENDS_BOOTLOADERS:remove = "${@bb.utils.contains('INCOMPATIBLE_LICENSE', 'GPLv3', 'grub-efi', '', d)}"
+WKS_FILE_DEPENDS_BOOTLOADERS:remove = "${@bb.utils.contains('INCOMPATIBLE_LICENSE', 'GPL-3.0-only', 'grub-efi', '', d)}"
 
-# Do not include installer routine when GPLv3 is not allowed.
-INITRAMFS_SCRIPTS:remove = "${@bb.utils.contains('INCOMPATIBLE_LICENSE', 'GPLv3', 'initramfs-module-install initramfs-module-install-efi', '', d)}"
-LABELS_LIVE:remove = "${@bb.utils.contains('INCOMPATIBLE_LICENSE', 'GPLv3', 'install', '', d)}"
+# Do not include installer routine when GPL-3.0-only is not allowed.
+INITRAMFS_SCRIPTS:remove = "${@bb.utils.contains('INCOMPATIBLE_LICENSE', 'GPL-3.0-only', 'initramfs-module-install initramfs-module-install-efi', '', d)}"
+LABELS_LIVE:remove = "${@bb.utils.contains('INCOMPATIBLE_LICENSE', 'GPL-3.0-only', 'install', '', d)}"
 
 KERNEL_IMAGETYPE = "bzImage"
 
@@ -78,7 +78,7 @@ TARGET_QEMU_CPU="Nehalem"
 
 IMAGE_FSTYPES += "live wic wic.bmap"
 
-WKS_FILE ?= "${@bb.utils.contains('INCOMPATIBLE_LICENSE', 'GPLv3', 'systemd-bootdisk.wks', 'intel-x86-mkefidisk.wks', d)}"
+WKS_FILE ?= "${@bb.utils.contains('INCOMPATIBLE_LICENSE', 'GPL-3.0-only', 'systemd-bootdisk.wks', 'intel-x86-mkefidisk.wks', d)}"
 do_image_wic[depends] += "gptfdisk-native:do_populate_sysroot"
 do_image_wic[recrdeptask] += "do_bootimg"
 
