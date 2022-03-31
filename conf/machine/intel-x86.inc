@@ -56,7 +56,6 @@ XSERVER ?= "xserver-xorg \
 	   xf86-video-modesetting \
 	   \
 	   ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'mesa-driver-swrast xserver-xorg-extension-glx', '', d)} \
-	   ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'mesa-driver-i915 mesa-driver-i965', '', d)} \
 	   ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'mesa mesa-demos', '', d)} \
 	   ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'xf86-video-ati xf86-video-intel', '', d)} \
 	   matchbox-wm"
