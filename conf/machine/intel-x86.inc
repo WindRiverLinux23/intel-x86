@@ -64,8 +64,8 @@ PREFERRED_PROVIDER_libglu = "libglu"
 PREFERRED_VERSION_virtual/mesa = "17.1.5"
 
 PREFERRED_PROVIDER_virtual/kernel ??= "linux-yocto"
-PREFERRED_VERSION_linux-yocto ?= "5.10%"
-PREFERRED_VERSION_linux-yocto-rt ?= "5.10%"
+PREFERRED_VERSION_linux-yocto ?= "5.15%"
+PREFERRED_VERSION_linux-yocto-rt ?= "5.15%"
 
 TARGET_QEMU_BIN = "qemu-system-x86_64"
 TARGET_QEMU_KERNEL="bzImage"
