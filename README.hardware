@@ -530,3 +530,9 @@ Please use the coreesponding BIOS to support SATA or TSN.
 
 3) If you enable Intel TCC mode in BIOS, you may not be able to use CPU frequency scaling, neither by
 acpi-cpufreq, nor by intel_pstate.
+
+4) To use CAN0 and CAN1 as host-owned, the following items in BIOS must be set.
+    Eclite    <Disabled>
+    I2C7      <Host owned with pin muxed>
+    CAN0      <Host owned with pin muxed>
+    CAN1      <Host owned with pin muxed>
