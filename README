@@ -1138,7 +1138,7 @@ To enable this feature, please add the following template:
 ------------------------------------
 When the Acceleration software loads, it is configured based on settings in the
 platform-specific configuration files. The configuration files should be copied from
-/etc/conf_files or /etc/zlib_conf to /etc directory.
+/etc/conf_files to /etc directory.
 
 • The name of the first configuration file for Intel® Communications Chipset 8925 to
 8955 Series devices is dh895xcc_dev0.conf.
@@ -1178,19 +1178,6 @@ Several samples will be installed in order to make qat devices test easily.
 
 For qat:
 $ cpa_sample_code signOfLife=1
-
-For zlib-qat:
-Configuration files for zlib-qat must be used for this case.
-$ cp /etc/zlib_conf/* /etc
-
-$ ls -l / > file.txt
-$ minigzip file.txt
-$ zcat file.txt.gz
-
-$ ls -l / > file.txt
-$ zpipe < file.txt > file.txt.gz
-
-$ comptestapp -t 1 -c 16384 -n 128 -l 1
 
 For more details, please refer to Intel QAT documentations released by Intel.
 https://01.org/intel-quickassist-technology
