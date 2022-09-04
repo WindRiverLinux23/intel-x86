@@ -1207,13 +1207,30 @@ For example, c6xx_dev0vf.conf is for the first VF QAT device.
 Before starting QAT service, run"echo "SRIOV_ENABLE=1" > /etc/default/qat"
 one time or run "export SRIOV_ENABLE=1" everytime.
 
-5.19.6 Note
+5.18.6 Note
 -----------
 1) If intel_iommu is enable, you must use SR-IOV, since PF (Physical Function) cannot
 be used with iommu enabled.
 
 2) With SR-IOV enabled, after starting QAT service, if you find some VFs are missing,
 just shutdown QAT service and start it again.
+
+5.19 Video
+==========
+
+5.19.1 xrandr
+-------------
+xrandr is a configuration utility to the RandR (Resize and Rotate) X Window System
+extension. It can be used to set the size, orientation or reflection of the outputs
+for a screen.
+
+xrandr shows the names of different outputs available on the system, such as VGA-1, HDMI-1
+and DP-1. It must be noticed that the output ports are from GPU side. You may have video
+protocol converter on your baseboard outside GPU. In this situation, xrandr cannot show the
+"correct" external video port. For example, if you have a DP-to-HDMI protocol coverter chip
+on your baseboard, the operations on DP port using xrandr will actually work on HDMI port.
+Please contact your BIOS provider and board manufacturer for the hardware details.
+
 
 6. Creating Partitioned Images(WIC)
 ==================================
