@@ -71,11 +71,11 @@ THE SOFTWARE.
 The following table summarizes the valid Wind River Linux distros for this BSP.
 'Y' in each content cell stands for supported; 'N' stands for not supported:
 
-  +--------------+-------------+-------------+-------------+
-  | valid/distro |   wrlinux   | wrlinux-cgl | wrlinux-ovp |
-  +--------------+-------------+-------------+-------------+
-  |    valid     |      Y      |      Y      |      Y      |
-  +--------------+-------------+-------------+-------------+
+  +--------------+-------------+-------------+
+  | valid/distro |   wrlinux   | wrlinux-ovp |
+  +--------------+-------------+-------------+
+  |    valid     |      Y      |      Y      |
+  +--------------+-------------+-------------+
 
 For the supported kernel type for this BSP, please check the TARGET_SUPPORTED_KTYPES
 by running 'bitbake -e virtual/kernel | grep "^TARGET_SUPPORTED_KTYPES="'.
