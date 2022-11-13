@@ -1,0 +1,32 @@
+From 939b15e47d900d19856d5e46aa2a6a36e75cc785 Mon Sep 17 00:00:00 2001
+From: Yongxin Liu <yongxin.liu@windriver.com>
+Date: Tue, 1 Nov 2022 12:56:25 +0800
+Subject: [PATCH 1/2] Remove ata_identify_page_supported()
+
+This function doesn't work with Simics Turbo Harddrive.
+Remove it as a workaround.
+
+Upstrem-Status: Wind River Specific
+
+Signed-off-by: Yongxin Liu <yongxin.liu@windriver.com>
+---
+ drivers/ata/libata-core.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
+index 4d308e3163c3..2cd132ba577b 100644
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -2446,8 +2446,7 @@ static void ata_dev_config_devslp(struct ata_device *dev)
+ 	 * Check device sleep capability. Get DevSlp timing variables
+ 	 * from SATA Settings page of Identify Device Data Log.
+ 	 */
+-	if (!ata_id_has_devslp(dev->id) ||
+-	    !ata_identify_page_supported(dev, ATA_LOG_SATA_SETTINGS))
++	if (!ata_id_has_devslp(dev->id))
+ 		return;
+ 
+ 	err_mask = ata_read_log_page(dev,
+-- 
+2.34.1
+

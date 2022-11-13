@@ -1,0 +1,27 @@
+intel-rdk
+=========
+This feature provides support for Intel Runtime Development Kit.
+Wind River doesn't provide RDK packages, please contact Intel.
+
+Supported version
+-----------------
+Grand Ridge RDK delivery 11
+
+How to use
+----------
+To enable this feature, please add the following configuration parameter:
+
+    --template=feature/intel-rdk
+
+Copy and rename rdk_klm_src_<branch>_<revision>_<date>_<commit>.txz to
+${LAYERDIR}/recipes-devtools/rdk-tools/files/rdk_klm_src.tar.xz.
+
+Copy and rename rdk_user_src_<branch>_<revision>_<date>_<commit>.txz to
+${LAYERDIR}/recipes-devtools/rdk-tools/files/rdk_user_src.tar.xz.
+
+Copy and rename dpdk_diff_<branch>_<revision>_<date>_<commit>.patch to
+${LAYERDIR}/recipes-devtools/dpdk/dpdk/dpdk_diff_grr_ase_rdk.patch.
+
+#@TYPE: Wrtemplate
+#@NAME: intel-rdk
+#@DESCRIPTION: Install Intel RDK tools to the image

@@ -1,0 +1,29 @@
+From 8e64c865f1ce61b906b2f68fab86828b7dbb0b4c Mon Sep 17 00:00:00 2001
+From: Yongxin Liu <yongxin.liu@windriver.com>
+Date: Tue, 18 Oct 2022 13:38:23 +0800
+Subject: [PATCH 2/5] rdk/grr/deliver11: include uapi/linux/ethtool.h
+
+Make it buildable with Linux kernel v5.15.
+
+Upstream-Status: Inappropriate [RDK is released in tarball form only]
+
+Signed-off-by: Yongxin Liu <yongxin.liu@windriver.com>
+---
+ klm/netd/adk_netd_nl_pif.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/klm/netd/adk_netd_nl_pif.c b/klm/netd/adk_netd_nl_pif.c
+index 6312a61..0c0daf7 100644
+--- a/klm/netd/adk_netd_nl_pif.c
++++ b/klm/netd/adk_netd_nl_pif.c
+@@ -29,6 +29,7 @@
+ #include <linux/netlink.h>
+ #include <linux/if_arp.h>
+ #include <linux/if_vlan.h>
++#include <uapi/linux/ethtool.h>
+ 
+ #include "adk_netd_dev.h"
+ #include "adk_netd_main.h"
+-- 
+2.34.1
+

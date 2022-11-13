@@ -1,0 +1,33 @@
+From 0e7097644a5cdc40823270377a1971130d022860 Mon Sep 17 00:00:00 2001
+From: Yongxin Liu <yongxin.liu@windriver.com>
+Date: Tue, 18 Oct 2022 13:09:15 +0800
+Subject: [PATCH 3/5] rdk/grr/deliver11: remove definition of cpu_online
+
+cpu_{online,possible,present,active}() were made inline in kernel v5.13-rc1~118^2~19
+by commit b02a4fd8148f ("cpumask: Make cpu_{online,possible,present,active}() inline")
+
+Upstream-Status: Inappropriate [RDK is released in tarball form only]
+
+Signed-off-by: Yongxin Liu <yongxin.liu@windriver.com>
+---
+ klm/qat/inline/kcompat.h | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/klm/qat/inline/kcompat.h b/klm/qat/inline/kcompat.h
+index a41eab7..a4ed8c3 100644
+--- a/klm/qat/inline/kcompat.h
++++ b/klm/qat/inline/kcompat.h
+@@ -241,10 +241,6 @@ struct msix_entry {
+ #define num_online_cpus() smp_num_cpus
+ #endif
+ 
+-#ifndef cpu_online
+-#define cpu_online(cpuid) test_bit((cpuid), &cpu_online_map)
+-#endif
+-
+ #ifndef _LINUX_RANDOM_H
+ #include <linux/random.h>
+ #endif
+-- 
+2.34.1
+

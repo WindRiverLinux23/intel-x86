@@ -1,0 +1,31 @@
+From 7b00496a9d82dd095e03e894deabe303fc2dd954 Mon Sep 17 00:00:00 2001
+From: Yongxin Liu <yongxin.liu@windriver.com>
+Date: Tue, 18 Oct 2022 13:52:12 +0800
+Subject: [PATCH 4/5] rdk/grr/deliver11: rename nla_strlcpy to nla_strscpy
+
+nla_strlcpy was renamed in kernel v5.11-rc1~169^2~247^2 by commit
+872f69034194 ("treewide: rename nla_strlcpy to nla_strscpy.")
+
+Upstream-Status: Inappropriate [RDK is released in tarball form only]
+
+Signed-off-by: Yongxin Liu <yongxin.liu@windriver.com>
+---
+ klm/netd/netd_genl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/klm/netd/netd_genl.c b/klm/netd/netd_genl.c
+index 77a5a0e..972463c 100644
+--- a/klm/netd/netd_genl.c
++++ b/klm/netd/netd_genl.c
+@@ -234,7 +234,7 @@ static int netd_genl_vif_create(struct sk_buff *skb, struct genl_info *info)
+ 			nla_get_u32(info->attrs[NETD_ATTR_VIF_ID]);
+ 	msg.nlMsg.createIfMsg.type =
+ 			nla_get_s32(info->attrs[NETD_ATTR_VIF_TYPE]);
+-	nla_strlcpy(msg.nlMsg.createIfMsg.name,
++	nla_strscpy(msg.nlMsg.createIfMsg.name,
+ 		    info->attrs[NETD_ATTR_VIF_NAME],
+ 		    NETD_ATTR_VIF_NAME_MAX);
+ 	ret = nla_memcpy(msg.nlMsg.createIfMsg.macAddr,
+-- 
+2.34.1
+
