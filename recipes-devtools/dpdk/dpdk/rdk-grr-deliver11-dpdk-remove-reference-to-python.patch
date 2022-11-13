@@ -1,0 +1,31 @@
+From 418a6be522ab968fe4d1f177ed4ffcd1a2ee9e78 Mon Sep 17 00:00:00 2001
+From: Yongxin Liu <yongxin.liu@windriver.com>
+Date: Thu, 10 Nov 2022 23:11:41 +0800
+Subject: [PATCH] rdk/grr/deliver11/dpdk: remove reference to python
+
+Use python3 instead.
+
+Upstream-Status: Inappropriate [RDK is released in tarball form only]
+
+Signed-off-by: Yongxin Liu <yongxin.liu@windriver.com>
+---
+ buildtools/meson.build | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/buildtools/meson.build b/buildtools/meson.build
+index b7240fc822..68320e8f70 100644
+--- a/buildtools/meson.build
++++ b/buildtools/meson.build
+@@ -37,8 +37,7 @@ else
+ endif
+ 
+ python3_required_modules = []
+-python3 = import('python').find_installation('python',
+-        modules : python3_required_modules)
++
+ if host_machine.system() != 'windows'
+     python3_required_modules = ['elftools']
+ endif
+-- 
+2.34.1
+

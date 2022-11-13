@@ -2,6 +2,8 @@ include dpdk.inc
 
 SRC_URI += " \
             file://0001-meson.build-march-and-mcpu-already-passed-by-Yocto-21.11.patch \
+            file://dpdk_diff_grr_ase_rdk.patch \
+            file://rdk-grr-deliver11-dpdk-remove-reference-to-python.patch \
 "
 
 STABLE = "-stable"
