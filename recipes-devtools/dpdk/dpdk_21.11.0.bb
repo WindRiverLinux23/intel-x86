@@ -2,9 +2,14 @@ include dpdk.inc
 
 SRC_URI += " \
             file://0001-meson.build-march-and-mcpu-already-passed-by-Yocto-21.11.patch \
-            file://dpdk_diff_grr_ase_rdk.patch \
+            ${DPDK_RDK_PATCH} \
             file://rdk-grr-deliver11-dpdk-remove-reference-to-python.patch \
 "
+
+# Define this if the file exists.  Usually done in a template.
+# DPDK_RDK_PATCH = "file://dpdk_diff_grr_ase_rdk.patch"
+#
+DPDK_RDK_PATCH ??= ""
 
 STABLE = "-stable"
 BRANCH = "21.11"

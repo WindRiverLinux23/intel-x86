@@ -4,8 +4,7 @@ HOMEPAGE = "https://www.intel.com"
 LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/GPL-2.0-only;md5=801f80980d171dd6425610833a22dbe6"
 
-SRC_URI = "file://rdk_user_src.tar.xz \
-           file://rdk_klm_src.tar.xz \
+SRC_URI = "${RDK_TOOLS_SOURCE} \
            file://rdk-grr-deliver11-include-linux-ethtool.h.patch \
            file://rdk-grr-deliver11-include-uapi-linux-ethtool.h.patch \
            file://rdk-grr-deliver11-remove-definition-of-cpu_online.patch \
@@ -14,6 +13,11 @@ SRC_URI = "file://rdk_user_src.tar.xz \
            file://rdk-grr-deliver11-add-missing-unused-meson-option.patch \
            file://rdk-grr-deliver11-ies-api-Add-Wno-error-address-to-b.patch \
           "
+
+# Define this if the files exist.  Usually done in a template.
+# RDK_TOOLS_SOURCE = "file://rdk_user_src.tar.xz file://rdk_klm_src.tar.xz"
+#
+RDK_TOOLS_SOURCE ??= ""
 
 inherit module meson pkgconfig
 
