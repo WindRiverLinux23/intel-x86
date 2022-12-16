@@ -27,6 +27,7 @@ RDK_TOOLS_VERSION ?= "grr_deliver11"
 S = "${WORKDIR}/rdk"
 PR = "${RDK_TOOLS_VERSION}"
 
+COMPATIBLE_MACHINE = "null"
 
 DEPENDS = "virtual/kernel libnl libpcap openssl rsync-native thrift meson-native lttng-ust lttng-tools"
 RDEPENDS_${PN} += "lttng-ust lttng-tools"
