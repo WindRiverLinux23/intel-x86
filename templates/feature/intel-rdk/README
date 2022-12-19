@@ -24,6 +24,11 @@ ${LAYERDIR}/recipes-devtools/dpdk/dpdk/dpdk_diff_grr_ase_rdk.patch.
 
 Uncomments DPDK_RDK_PATCH and RDK_TOOLS_SOURCE in feature/intel-rdk/template.conf
 
+Set following configs in local.conf:
+
+    CUSTOMER_RECIPES:intel-x86 += 'rdk-tools'
+    CUSTOMER_RECIPES:intel-x86 += 'dpdk'
+
 #@TYPE: Wrtemplate
 #@NAME: intel-rdk
 #@DESCRIPTION: Install Intel RDK tools to the image
