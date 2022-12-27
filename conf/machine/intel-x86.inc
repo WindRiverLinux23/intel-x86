@@ -36,7 +36,7 @@ LABELS_LIVE:remove = "${@bb.utils.contains('INCOMPATIBLE_LICENSE', 'GPL-3.0-only
 
 KERNEL_IMAGETYPE = "bzImage"
 
-SERIAL_CONSOLES = "115200;ttyS0 115200;ttyUSB0"
+SERIAL_CONSOLES ?= "115200;ttyS0 115200;ttyUSB0"
 
 MACHINEOVERRIDES:prepend = "intel-x86:"
 
