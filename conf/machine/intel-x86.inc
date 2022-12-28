@@ -67,6 +67,7 @@ PREFERRED_VERSION_linux-yocto ?= "5.15%"
 PREFERRED_VERSION_linux-yocto-rt ?= "5.15%"
 
 TUNE_CCARGS:remove:pn-syslinux = "-mfpmath=sse -msse4.2"
+TUNE_CCARGS:pn-lib32-gtk4 = "${@bb.utils.contains('TUNE_FEATURES', 'corei7', ' -march=nehalem -mtune=generic -mno-sse', '', d)}"
 
 TARGET_QEMU_BIN = "qemu-system-x86_64"
 TARGET_QEMU_KERNEL="bzImage"
