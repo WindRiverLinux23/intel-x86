@@ -13,5 +13,10 @@ KERNELLOADEREXTENSION:append:intel-x86-64 = " kernel-grub"
 TARGET_SUPPORTED_KTYPES:intel-x86 = "standard preempt-rt"
 
 do_install:append:intel-x86() {
-	rm -rf ${D}/lib/modules/${KERNEL_VERSION}/kernel/drivers/crypto
+	if [ -n "${@bb.utils.contains('WRTEMPLATE', 'feature/intel-qat', '1', '', d)}" ];then
+		rm -rf ${D}/lib/modules/${KERNEL_VERSION}/kernel/drivers/crypto/qat
+		if [ "`ls -A ${D}/lib/modules/${KERNEL_VERSION}/kernel/drivers/crypto/`" = "" ];then
+			rm -rf ${D}/lib/modules/${KERNEL_VERSION}/kernel/drivers/crypto
+		fi
+	fi
 }
