@@ -516,11 +516,7 @@ in a different environment it may have some issues.
 
 	o EDAC
 
-	o Timed GPIO
-
 	o Time-Sensitive Networking
-
-	o Intel Time Coordinated Computing
 
 3.5.3 Notes
 ~~~~~~~~~~~
