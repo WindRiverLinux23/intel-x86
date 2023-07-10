@@ -20,10 +20,13 @@ This BSP supports the following boards:
 	+ Intel Grand Ridge: Intel Atom(R) P6962 processor
 	+ Intel Sapphire Rapids: Intel Xeon(R) Platinum 8468H
 	+ Intel Coffee Lake S: Intel(R) Core(TM) i7-8700
+	+ Intel Idaville LCC: Intel Xeon D Processors, Ice Lake-D SoC, (IOTG: Brighton City)
+	+ Intel Idaville HCC: Intel Xeon D Processors, Ice Lake-D SoC, (Moro City)
 
 2. Change History
 =================
 
+	- 2023/12 (LINUXPG-1710) Add Icelake-D support
 	- 2023/12 (LINUXPG-1708) Add Coffee Lake S support
 	- 2023/10 (LINUXPG-1704) Add Sapphire Rapids support
 	- 2023/10 (LINUXPG-1705) Add Grand Ridge support
@@ -883,6 +886,176 @@ If you don't have SD card either and are bothered by this message, you can disab
 
 2) You may see phantom monitor connected to HDMI port, when you don't actually have any HDMI monitor.
 This issue is caused by FW 1.63 of LSPCON MC2800. Please contact you hardware/system provider for the update.
+
+3.9 Intel Idaville LCC(Ice-D SoC)
+---------------------------------
+
+Intel Idaville LCC featuring Intel Xeon D Processor, specifically at edge
+of Data Center and Network, with support of QAT, 50G throughput Ethernet.
+
+3.9.1 Validated Board Info
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This BSP is only validated in the following environment. If you use this BSP
+in a different environment it may possibly have some issues.
+
+[Board info]
+	Vendor: Intel Corporation
+	Platform: Intel Idaville Brighton City
+	SoC Codename: Ice Lake-D
+
+[BIOS info]
+	BIOS Version: IDVLCRB1.86B.0020.D60.2109070127
+
+[Processor info]
+	vendor_id: GenuineIntel
+	Core: 8
+	Thread: 16
+	ID: 0x000606C0
+	Stepping: 0
+	Microcode Rev: 0xfd000220
+
+3.9.2 Supported Features
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following BSP features are validated and supported on boards where
+the corresponding h/w features exist.
+
+	o Bus
+		+ PCI/PCI-Express
+		+ I2C/SMBus:
+			+ System peripheral [0880]: Intel Corporation Device [8086:18ac] (rev 11)
+			+ SMBus [0c05]: Intel Corporation Device [8086:18df] (rev 11)
+
+	o Network
+		+ Intel Ethernet on board:
+			+ Intel Corporation I210 Gigabit Network Connection [8086:1533] (rev 03)
+		+ Intel 1xQSFP28 and 4xSFP28 NIC
+			+ Intel(R) Ethernet Connection E823-L for QSFP [8086:151d]
+			+ Intel(R) Ethernet Connection E823-L for SFP [8086:124d]
+
+	o USB
+		+ USB 3.0 XHCI controller:
+			+ USB controller [0c03]: Intel Corporation Device [8086:18d0] (rev 11)
+
+	o Storage
+		+ SATA:
+			+ SATA controller [0106]: Intel Corporation Device [8086:18c2] (rev 11)
+			+ MiniSAS x8
+		+ MMC: SD Host controller [0805]: Intel Corporation Device [8086:18db] (rev 11)
+
+	o Multimedia
+		+ Graphics:
+			+ ASPEED Technology, Inc. ASPEED Graphics Family [1a03:2000] (rev 41) (prog-if 00 [VGA controller])
+
+	o Misc Devices
+		+ UART: 8250/16550A compatible serial port
+			+ Serial controller [0700]: Intel Corporation Device [8086:18d8] (rev 11)
+		+ Input device
+			+ USB mouse & keyboard
+
+	o Intel QuickAssit Technology
+		+ Co-processor [0b40]: Intel Corporation Device 2xxx [8086:18ee]
+
+3.9.3 Unsupported Features
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following features are not supported or validated:
+
+	x watchdog
+	x S3/S4
+
+1) Watchdog is not supported because of BIOS issue.
+2) For S3/S4, Intel has no plan to support it on this board.
+
+3.9.4 Notes
+~~~~~~~~~~~
+1) 4xSFP is not enabled by default, flash 100G_8x10G NVM image can enable it.
+
+
+3.10 Intel Idaville HCC(Ice-D SoC)
+----------------------------------
+
+Intel Idaville LCC featuring Intel Xeon D Processor, specifically at edge
+of Data Center and Network, with support of QAT, 100G throughput Ethernet.
+
+3.10.1 Validated Board Info
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This BSP is only validated in the following environment. If you use this BSP
+in a different environment it may possibly have some issues.
+
+[Board info]
+	Vendor: Intel Corporation
+	Platform: Intel Idaville Moro City
+	SoC Codename: Ice Lake-D
+
+[BIOS info]
+	BIOS Version: IDVLCRB1.86B.0021.D41.2112031014
+
+[Processor info]
+	vendor_id: GenuineIntel
+	model name: Intel(R) Xeon(R) D-2753NT CPU @ 2.00GHz
+	Core: 12
+	Thread: 24
+	ID: 0x000606C1
+	Stepping: 1
+	Microcode Rev: 0x1000150
+
+3.10.2 Supported Features
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following BSP features are validated and supported on boards where
+the corresponding h/w features exist.
+
+	o Bus
+		+ PCI/PCI-Express
+		+ I2C/SMBus:
+			+ System peripheral [0880]: Intel Corporation Device [8086:18ac] (rev 11)
+			+ SMBus [0c05]: Intel Corporation Device [8086:18df] (rev 11)
+
+	o Network
+		+ Intel Ethernet:
+			+ Intel Corporation Ethernet Controller X710 for 10GBASE-T [8086:15ff] (rev 02)
+		+ Intel 2xQSFP28
+			+ Intel Corporation Ethernet Connection E823-L for backplane [8086:124c]
+
+	o USB
+		+ USB 3.0 XHCI controller:
+			+ USB controller [0c03]: Intel Corporation Device [8086:18d0] (rev 11)
+
+	o Storage
+		+ SATA:
+			+ SATA controller [0106]: Intel Corporation Device [8086:18c2] (rev 11)
+			+ MiniSAS x8
+		+ MMC: SD Host controller [0805]: Intel Corporation Device [8086:18db] (rev 11)
+
+	o Multimedia
+		+ Graphics:
+			+ ASPEED Technology, Inc. ASPEED Graphics Family [1a03:2000] (rev 41) (prog-if 00 [VGA controller])
+
+	o Misc Devices
+		+ UART: 8250/16550A compatible serial port
+			+ Serial controller [0700]: Intel Corporation Device [8086:18d8] (rev 11)
+		+ Input device
+			+ USB mouse & keyboard
+		+ watchdog: Intel TCO WatchDog Timer
+
+	o Intel QuickAssit Technology
+		+ Co-processor [0b40]: Intel Corporation C4xxx Series QAT [8086:18a0]
+
+3.10.3 Unsupported Features
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following features are not supported or validated:
+
+	x S3/S4
+
+For S3/S4, Intel has no plan to support it on this board.
+
+3.10.4 Notes
+~~~~~~~~~~~~
+1) only 1 QSFP is enabled by default, flash 8x10_QSFP or 2x100_QSFP NVM image can enable another one.
 
 4. Common Known Issues
 ======================
