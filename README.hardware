@@ -186,7 +186,7 @@ the corresponding h/w features exist.
 	o Network
 		+ Intel E1000E Gigabit Ethernet:
 			+ Intel Corporation Ethernet Connection (13) I219-V [8086:15fc] (rev 20)
-		+ Wireless
+		+ Wireless & Bluetooth
 			+ Intel Corporation Wi-Fi 6 AX201 [8086:a0f0] (rev 20)
 			+ Intel Corporation Wireless-AC 9260 [8086:2526] (rev 29)
 
@@ -224,8 +224,6 @@ the corresponding h/w features exist.
 			+ USB mouse & keyboard
 		+ Watchdog: WDAT (Watchdog Action Table)
 		+ HW Monitor: Intel CPU core temperature sensor
-
-	o Bluetooth
 
 	o TPM2.0
 
