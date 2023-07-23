@@ -418,18 +418,28 @@ serial port according to your hardware.
 3.4.5 Known Issues
 ~~~~~~~~~~~~~~~~~~
 
-(1) Serial port console may be not resumed after system comes back from APCI S4.
+1) Serial port console may be not resumed after system comes back from APCI S4.
 Use the following commands to restore.
 
         root@intel-x86-64:~# systemctl restart serial-getty@ttyS0.service
 
-(2) If you see below output from kernel or similar message after resuming from suspend,
+2) If you see below output from kernel or similar message after resuming from suspend,
 
         ice 0000:ec:00.1: control queues init failed ICE_ERR_AQ_TIMEOUT
         ice 0000:ec:00.1: Rebuild failed, unload and reload driver
 
 do "rmmod ice; modprobe ice" to unload and reload ice driver as kernel said, otherwise you
 may suffer malfunctional ice NIC.
+
+3) In kernel booting log, you may see "pmd_set_huge: Cannot satisfy [mem 0x80000000-0x80200000]
+with a huge-page mapping due to MTRR override.". This message is a harmless warning. It just
+shows that the I/O remapping code can't set up huge page mapping due to MTRR override and it
+will fall back to use a smaller page size of 4KB.
+
+BOIS sets [mem 0x80000000-0x8fffffff] as uncached range for PCI MMCONFIG. It is used to access
+extended PCIe configuration space.
+
+You may add "nohugeiomap" to kernel boot command line to disable I/O huge page mapping.
 
 3.5 Intel Elkhart Lake
 ----------------------
