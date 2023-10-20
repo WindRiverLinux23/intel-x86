@@ -17,11 +17,11 @@ This BSP supports the following boards:
 	+ Intel Ice Lake-SP: 3rd Gen Intel(R) Xeon(R) Scalable processor
 	+ Intel Snow Ridge: Intel Atom(R) P5362 processor
 	+ Intel Elkhart Lake: Intel Atom(R) x6425RE Processor
-	+ Intel Grand Ridge Simics: Intel(R) Atom(TM) CPU
 
 2. Change History
 =================
 
+	- 2023/10 (LINUXPG-1705) Remove Grand Ridge Simics support
 	- 2022/11 (LINUXPG-1347) Add Grand Ridge Simics support
 	- 2021/07 (LINUXPG-828) (LINUXPG-654) Add Elkhart Lake support
 	- 2021/05 (LINUXPG-658) Add Snow Ridge NS support
@@ -542,72 +542,3 @@ acpi-cpufreq, nor by intel_pstate.
     I2C7      <Host owned with pin muxed>
     CAN0      <Host owned with pin muxed>
     CAN1      <Host owned with pin muxed>
-
-3.6 Intel Grand Ridge Simics
-----------------------------
-
-3.6.1 Validated Board Info
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-This BSP is only validated in following environment. If you use this BSP
-in a different environment it may have some issues.
-
-[BIOS Info]
-	Vendor: Intel Corporation
-	Version: LVLDCRB1.86B.0013.D07.2209041933
-	Release Date: 09/04/2022
-
-[RDK Info]
-	Intel Grand Ridge RDK DElivery-11 2022.0915
-
-[CPU Info]
-	CPU family:          6
-	Model:               182
-	Model name:          Intel(R) Atom(TM) CPU @ 2.20GHz
-
-[Simics Version]
-	Intel Simics 6.0.143
-
-[Board Info]
-	Intel Loganville BTS
-
-3.6.2 Supported Features
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-	o Bus
-		+ PCI-Express
-		+ I2C/SMBus
-			Intel Corporation Atom Processor C3000 Series SMBus Controller - Host [8086:19ac]
-			Intel Corporation Device [8086:1bc9]
-
-	o Network
-		+ Intel Corporation I210 Gigabit Network Connection [8086:1533]
-		+ Intel Corporation Device [8086:0dbd]
-
-	o USB
-		+ Intel Corporation Device [8086:1bcd] (prog-if 30 [XHCI])
-
-	o SPI
-		+ Intel Corporation Device [8086:1bca]
-
-	o Storage
-		+ Simics Turbo Harddrive
-			+ Intel Corporation Device [8086:1bf2] (prog-if 01 [AHCI 1.0])
-
-	o DLB(a.k.a HQM) -- Dynamic Load Balancer
-		+ Intel Corporation Device [8086:2714]
-
-	o Intel QuickAssist Technology
-		+ Intel Corporation Device [8086:578a]
-
-	o Intel Speed Select Technology interface
-		+ Intel Corporation Device [8086:3251]
-
-	o Intel Data Accelerators
-		+ Intel Corporation Device [8086:0b25]
-
-3.6.3 Notes
-~~~~~~~~~~~
-
-1) Must build with feature/intel-rdk.
-2) Default console serial port is ttyS4.
