@@ -3,12 +3,12 @@ intel-rdk
 This feature provides support for Intel Runtime Development Kit.
 Wind River doesn't provide RDK packages, please contact Intel.
 
-Supported version
------------------
-Grand Ridge RDK delivery 11
+1. Supported version
+--------------------
+v23.09
 
-How to use
-----------
+2. How to build
+---------------
 To enable this feature, please add the following configuration parameter:
 
     --template=feature/intel-rdk
@@ -24,6 +24,34 @@ Uncomments RDK_TOOLS_SOURCE in feature/intel-rdk/template.conf
 Set following configs in local.conf:
 
     CUSTOMER_RECIPES:intel-x86 += 'rdk-tools'
+
+3. File installation
+--------------------
+After the WRLinux image is built, the rdk-tools will be installed to three locations.
+
+1) Libraries, header files, binaries and configuration files will be installed
+to /opt/intel/rdk-tools on target.
+
+2) Kernel out-of-tree drivers will be installed to
+/lib/modules/<kernel version>/kernel/drivers/staging/intel-rdk on target.
+
+3) Firmware in RDK will be installed to /lib/firmware on target.
+
+4. Kernel out-of-tree drivers
+-----------------------------
+All drivers from Intel RDK tools are disabled from auto-loading. You can use "modprobe"
+to load the driver you want, or change "module_conf_<driver>" in rdk-tools.bb.
+
+5. DPDK with RDK
+----------------
+RDK tools should not be compiled with feature/dpdk. Since RDK tools depend on different
+version of DPDK and do a patch on that specific version of DPDK, please refer to
+rdk_readme.txt in RDK tarball for building the DPDK.
+
+6. Intel QuickAssist Technology (QAT)
+-------------------------------------
+RDK tools provide QAT kernel drivers. So feature/intel-rdk should not be built with
+feature/intel-qat.
 
 #@TYPE: Wrtemplate
 #@NAME: intel-rdk

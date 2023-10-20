@@ -1,0 +1,44 @@
+From e0144c50f70db3bd10ca004c7d4055830fa68b93 Mon Sep 17 00:00:00 2001
+From: Yongxin Liu <yongxin.liu@windriver.com>
+Date: Mon, 11 Sep 2023 09:29:28 +0000
+Subject: [PATCH] rdk/grr: change IES_UNSUPPORTED macro to be deprecated
+
+Change IES_UNSUPPORTED macro to be deprecated, instead of unavailable.
+'unavailable' attribute will trigger compilation error with GCC 12.
+
+Upstream-Status: Inappropriate [RDK is released in tarball only]
+
+Signed-off-by: Yongxin Liu <yongxin.liu@windriver.com>
+---
+ user_modules/ies-api/shared/include/pub/ies_common.h | 9 ---------
+ 1 file changed, 9 deletions(-)
+
+diff --git a/user_modules/ies-api/shared/include/pub/ies_common.h b/user_modules/ies-api/shared/include/pub/ies_common.h
+index ad7fbc8..e08b373 100644
+--- a/user_modules/ies-api/shared/include/pub/ies_common.h
++++ b/user_modules/ies-api/shared/include/pub/ies_common.h
+@@ -75,21 +75,12 @@
+  * highly likely __GNUC_PREREQ is properly defined so let's use it
+  * to check if we can use unavailable attribute (starting with gcc 12.0).
+  */
+-#if __GNUC_PREREQ(12, 0)
+-#define IES_UNSUPPORTED(msg) \
+-	__attribute__((unavailable("Symbol is unsupported. " #msg)))
+-/* Symbol is no longer supported. Use it's alternative.  */
+-#define IES_UNSUPPORTED_ALT(alt)					\
+-	__attribute__((unavailable("Symbol is no longer supported, "	\
+-		      "use " #alt " instead")))
+-#else /* __GNUC_PREREQ(12,0) */
+ #define IES_UNSUPPORTED(msg) \
+ 	__attribute__((deprecated("Symbol is unsupported. " #msg)))
+ /* Symbol is no longer supported. Use it's alternative.  */
+ #define IES_UNSUPPORTED_ALT(alt)					\
+ 	__attribute__((deprecated("Symbol is no longer supported, "	\
+ 		      "use " #alt " instead")))
+-#endif /* CC_HAS_UNAVAILABLE_ATTRIBUTE */
+ #else
+ #define IES_DEPRECATED(msg)
+ #define IES_DEPRECATED_ALT(alt)
+-- 
+2.39.2
+

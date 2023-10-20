@@ -1,0 +1,49 @@
+From d1efd650d57c3778a4fe319c82042d94823326fd Mon Sep 17 00:00:00 2001
+From: Yongxin Liu <yongxin.liu@windriver.com>
+Date: Tue, 5 Sep 2023 14:07:14 +0000
+Subject: [PATCH] rdk/grr: remove IS_ENABLED(CONFIG_PLDMFW)
+
+CONFIG_PLDMFW is enabled in kernel config. Deleting #error directive to
+avoid compilation error.
+
+Upstream-Status: Inappropriate [RDK is released in tarball only]
+
+Signed-off-by: Yongxin Liu <yongxin.liu@windriver.com>
+---
+ klm/cpk/kcompat_pldmfw.c | 4 ----
+ klm/cpk/kcompat_pldmfw.h | 4 ----
+ 2 files changed, 8 deletions(-)
+
+diff --git a/klm/cpk/kcompat_pldmfw.c b/klm/cpk/kcompat_pldmfw.c
+index d4605d8..9f92920 100644
+--- a/klm/cpk/kcompat_pldmfw.c
++++ b/klm/cpk/kcompat_pldmfw.c
+@@ -19,10 +19,6 @@
+ #include "kcompat.h"
+ #include "kcompat_pldmfw.h"
+ 
+-#if IS_ENABLED(CONFIG_PLDMFW)
+-#error "CONFIG_PLDMFW is enabled, use builtin lib/pldmfw instead."
+-#endif
+-
+ /* This section is taken from upstream "lib/pldmfw/pldmfw_private.h" */
+ 
+ /* The following data structures define the layout of a firmware binary
+diff --git a/klm/cpk/kcompat_pldmfw.h b/klm/cpk/kcompat_pldmfw.h
+index fa425cd..57bf067 100644
+--- a/klm/cpk/kcompat_pldmfw.h
++++ b/klm/cpk/kcompat_pldmfw.h
+@@ -13,10 +13,6 @@
+ #error "Do not include both kcompat_pldmfw.h and <linux/pldmfw.h>"
+ #endif
+ 
+-#if IS_ENABLED(CONFIG_PLDMFW)
+-#error "CONFIG_PLDMFW is enabled, use <linux/pldmfw.h>"
+-#endif
+-
+ #include <linux/list.h>
+ #include <linux/firmware.h>
+ 
+-- 
+2.39.2
+

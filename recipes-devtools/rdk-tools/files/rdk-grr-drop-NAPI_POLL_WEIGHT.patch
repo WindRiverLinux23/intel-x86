@@ -1,0 +1,46 @@
+From 45b1b4597624c3286631ade4510061a7b33e112e Mon Sep 17 00:00:00 2001
+From: Yongxin Liu <yongxin.liu@windriver.com>
+Date: Tue, 5 Sep 2023 14:03:50 +0000
+Subject: [PATCH] rdk/grr: drop NAPI_POLL_WEIGHT
+
+Due to kernel commit b48b89f9c189 ("net: drop the weight argument
+from netif_napi_add").
+
+Upstream-Status: Inappropriate [RDK is released in tarball only]
+
+Signed-off-by: Yongxin Liu <yongxin.liu@windriver.com>
+---
+ klm/cpk/ice_base.c | 3 +--
+ klm/cpk/ice_main.c | 2 +-
+ 2 files changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/klm/cpk/ice_base.c b/klm/cpk/ice_base.c
+index 00bac7e..7b37d8a 100644
+--- a/klm/cpk/ice_base.c
++++ b/klm/cpk/ice_base.c
+@@ -124,8 +124,7 @@ static int ice_vsi_alloc_q_vector(struct ice_vsi *vsi, u16 v_idx)
+ 	 * handler here (i.e. resume, reset/rebuild, etc.)
+ 	 */
+ 	if (vsi->netdev)
+-		netif_napi_add(vsi->netdev, &q_vector->napi, ice_napi_poll,
+-			       NAPI_POLL_WEIGHT);
++		netif_napi_add(vsi->netdev, &q_vector->napi, ice_napi_poll);
+ 
+ out:
+ 	/* tie q_vector and VSI together */
+diff --git a/klm/cpk/ice_main.c b/klm/cpk/ice_main.c
+index 2001d98..2779f97 100644
+--- a/klm/cpk/ice_main.c
++++ b/klm/cpk/ice_main.c
+@@ -2817,7 +2817,7 @@ static void ice_napi_add(struct ice_vsi *vsi)
+ 
+ 	ice_for_each_q_vector(vsi, v_idx)
+ 		netif_napi_add(vsi->netdev, &vsi->q_vectors[v_idx]->napi,
+-			       ice_napi_poll, NAPI_POLL_WEIGHT);
++			       ice_napi_poll);
+ }
+ 
+ /**
+-- 
+2.39.2
+

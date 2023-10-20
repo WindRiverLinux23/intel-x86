@@ -1,0 +1,37 @@
+From fa5f397c49c466122f7b74dcb247e6192fd78b51 Mon Sep 17 00:00:00 2001
+From: Yongxin Liu <yongxin.liu@windriver.com>
+Date: Thu, 19 Oct 2023 19:58:58 +0800
+Subject: [PATCH] rdk/grr: change "+=" to "=" for KBUILD_EXTRA_SYMBOLS
+
+This is a workaround to avoid the following error.
+
+ERROR: modpost:
+grr_2308/rdk/klm/qat/qat/drivers/crypto/qat/qat_common/intel_qat:
+'adf_cfg_dev_add' exported twice. Previous export was in
+grr_2308/rdk/klm/qat/qat/drivers/crypto/qat/qat_common/intel_qat.ko
+
+In Makefile of usdm, duplicate settings was added to KBUILD_EXTRA_SYMBOLS.
+
+Upstream-Status: Inappropriate [RDK is released in tarball only]
+
+Signed-off-by: Yongxin Liu <yongxin.liu@windriver.com>
+---
+ klm/qat/usdm/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/klm/qat/usdm/Makefile b/klm/qat/usdm/Makefile
+index bd9e861..9d945f5 100644
+--- a/klm/qat/usdm/Makefile
++++ b/klm/qat/usdm/Makefile
+@@ -87,7 +87,7 @@ endif
+ 
+ ifeq ($(ICP_QDM_IOMMU), 1)
+     EXTRA_CFLAGS += -DICP_QDM_IOMMU
+-    KBUILD_EXTRA_SYMBOLS+=$(QAT_PATH)/Module.symvers
++    KBUILD_EXTRA_SYMBOLS=$(QAT_PATH)/Module.symvers
+     export KBUILD_EXTRA_SYMBOLS
+ endif
+ 
+-- 
+2.39.2
+

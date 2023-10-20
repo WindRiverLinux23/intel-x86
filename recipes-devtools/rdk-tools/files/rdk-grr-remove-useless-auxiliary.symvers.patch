@@ -1,0 +1,38 @@
+From 3d24475c8c6ed2cb779ed4fc28538f2220e6c948 Mon Sep 17 00:00:00 2001
+From: Yongxin Liu <yongxin.liu@windriver.com>
+Date: Tue, 5 Sep 2023 14:32:00 +0000
+Subject: [PATCH] rdk/grr: remove useless auxiliary.symvers
+
+On kernel v5.15, it is just a warning "WARNING: Symbol version dump
+"auxiliary.symvers" is missing." And the build can proceed.
+
+On kernel v6.1, due to commit f73edc8951b2 ("kbuild: unify two modpost
+invocations"), it is reported as an error "auxiliary.symvers: No such
+file or directory".
+
+auxiliary.symvers is used as KBUILD_EXTRA_SYMBOLS := auxiliary.symvers,
+and it is non-exsiting in RDK.
+
+Upstream-Status: Inappropriate [RDK is released in tarball only]
+
+Signed-off-by: Yongxin Liu <yongxin.liu@windriver.com>
+---
+ klm/ies/Makefile | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/klm/ies/Makefile b/klm/ies/Makefile
+index ea70967..0d724a4 100644
+--- a/klm/ies/Makefile
++++ b/klm/ies/Makefile
+@@ -23,8 +23,6 @@ ifneq ($(KERNELRELEASE),)
+ # Makefile for the Intel(R) Ethernet Switch Linux Kernel Driver
+ #
+ 
+-KBUILD_EXTRA_SYMBOLS := auxiliary.symvers
+-
+ obj-$(CONFIG_IES) += ies.o
+ 
+ ies-y := ies_main.o
+-- 
+2.39.2
+

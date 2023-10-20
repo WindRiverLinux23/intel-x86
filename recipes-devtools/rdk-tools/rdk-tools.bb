@@ -5,13 +5,13 @@ LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/GPL-2.0-only;md5=801f80980d171dd6425610833a22dbe6"
 
 SRC_URI = "${RDK_TOOLS_SOURCE} \
-           file://rdk-grr-deliver11-include-linux-ethtool.h.patch \
-           file://rdk-grr-deliver11-include-uapi-linux-ethtool.h.patch \
-           file://rdk-grr-deliver11-remove-definition-of-cpu_online.patch \
-           file://rdk-grr-deliver11-rename-nla_strlcpy-to-nla_strscpy.patch \
-           file://rdk-grr-deliver11-use-namespace-CRYPTO_INTERNAL-for.patch \
-           file://rdk-grr-deliver11-add-missing-unused-meson-option.patch \
-           file://rdk-grr-deliver11-ies-api-Add-Wno-error-address-to-b.patch \
+           file://rdk-tools.sh \
+           file://rdk-grr-drop-NAPI_POLL_WEIGHT.patch \
+           file://rdk-grr-remove-IS_ENABLED-CONFIG_PLDMFW.patch \
+           file://rdk-grr-remove-useless-auxiliary.symvers.patch \
+           file://rdk-grr-add-missing-unused-meson-option.patch \
+           file://rdk-grr-change-IES_UNSUPPORTED-macro-to-be-deprecate.patch \
+           file://rdk-grr-change-to-for-KBUILD_EXTRA_SYMBOLS.patch \
           "
 
 # Define this if the files exist.  Usually done in a template.
@@ -22,7 +22,7 @@ RDK_TOOLS_SOURCE ??= ""
 inherit module meson pkgconfig
 
 # Currently supported version
-RDK_TOOLS_VERSION ?= "grr_deliver11"
+RDK_TOOLS_VERSION ?= "grr_2309"
 
 S = "${WORKDIR}/rdk"
 PR = "${RDK_TOOLS_VERSION}"
@@ -72,12 +72,12 @@ do_install () {
 	install -d ${D}${RDK_INSTALL_DIR}
 	cp -r ${S}/install/*  ${D}${RDK_INSTALL_DIR}
 
-	install -d ${D}${RDK_INSTALL_DIR}${nonarch_base_libdir}/modules/${KERNEL_VERSION}
-	mv ${D}${RDK_INSTALL_DIR}/drivers/*.ko ${D}${RDK_INSTALL_DIR}${nonarch_base_libdir}/modules/${KERNEL_VERSION}
+	install -d ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/staging/intel-rdk
+	install -m 0644  ${D}${RDK_INSTALL_DIR}/drivers/*.ko ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/staging/intel-rdk/
 
 	install -d ${D}${nonarch_base_libdir}/firmware
-	install -D -m 0644 ${D}${RDK_INSTALL_DIR}/drivers/qat_c4xxx.bin  ${D}${nonarch_base_libdir}/firmware/qat_c4xxx.bin
-	install -D -m 0644 ${D}${RDK_INSTALL_DIR}/drivers/qat_c4xxx_mmp.bin ${D}${nonarch_base_libdir}/firmware/qat_c4xxx_mmp.bin
+	install -D -m 0644 ${D}${RDK_INSTALL_DIR}/drivers/qat_300xx.bin  ${D}${nonarch_base_libdir}/firmware/qat_300xx.bin
+	install -D -m 0644 ${D}${RDK_INSTALL_DIR}/drivers/qat_300xx_mmp.bin ${D}${nonarch_base_libdir}/firmware/qat_300xx_mmp.bin
 
 	install -D -m 0644 ${S}/install/lib/firmware/intel/ice_sw/ddp/ice_sw.pkg ${D}${nonarch_base_libdir}/firmware/intel/ice_sw/ddp/ice_sw.pkg
 	install -D -m 0644 ${S}/install/lib/firmware/intel/eth56g/phy-fw.bin ${D}${nonarch_base_libdir}/firmware/intel/eth56g/phy-fw.bin
@@ -85,6 +85,9 @@ do_install () {
 	sed -i 's#prefix=.*#prefix=${prefix}#' ${D}${RDK_INSTALL_DIR}/lib/pkgconfig/*.pc
 
 	rm -rf ${D}/etc
+
+	install -d ${D}${sysconfdir}/profile.d/
+	install -m 0755 ${WORKDIR}/rdk-tools.sh ${D}${sysconfdir}/profile.d/
 }
 
 SYSROOT_DIRS += "/opt"
@@ -92,7 +95,30 @@ SYSROOT_DIRS += "/opt"
 FILES:${PN}-dev = "${RDK_INSTALL_DIR}/lib/libies*.so"
 FILES:${PN}-staticdev = "${RDK_INSTALL_DIR}/lib/libies*.a"
 FILES:${PN} += "${RDK_INSTALL_DIR} \
-                /lib "
+                /lib/firmware \
+                ${sysconfdir}/profile.d/rdk-tools.sh \
+               "
+KERNEL_MODULE_PROBECONF += "adk_netd dlb2 i3c_rdk ice_sw \
+                            ice_sw_ae ies intel_vsec \
+                            ipsec_inline oobmsm_rdk \
+                            intel_qat qat_300xx qat_c3xxx qat_c4xxx \
+                           "
+
+# The following kernel drivers will not be autoloaded during kernel boot.
+# User can use "modprobe" to load drivers which they will use.
+module_conf_adk_netd = "blacklist adk_netd"
+module_conf_dlb2 = "blacklist dlb2"
+module_conf_i3c_rdk = "blacklist i3c_rdk"
+module_conf_ice_sw = "blacklist ice_sw"
+module_conf_ice_sw_ae = "blacklist ice_sw_ae"
+module_conf_ies = "blacklist ies"
+module_conf_intel_vsec = "blacklist intel_vsec"
+module_conf_ipsec_inline = "blacklist ipsec_inline"
+module_conf_oobmsm_rdk = "blacklist oobmsm_rdk"
+module_conf_intel_qat = "blacklist intel_qat"
+module_conf_qat_300xx = "blacklist qat_300xx"
+module_conf_qat_c3xxx = "blacklist qat_c3xxx"
+module_conf_qat_c4xxx = "blacklist qat_c4xxx"
 
 INSANE_SKIP:${PN} = "already-stripped ldflags"
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
