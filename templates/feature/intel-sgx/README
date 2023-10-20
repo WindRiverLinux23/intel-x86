@@ -1,0 +1,73 @@
+intel-sgx
+=========
+This feature adds Linux driver support for Intel Software Guard
+Extensions (SGX) in intel-x86 BSP.
+
+To enable this feature, please add the following configuration parameter:
+
+    --template=feature/intel-sgx
+
+In order to make SGX work on your platform, you need SGX Linux driver,
+SGX SDK, SGX PSW (platform software) and enable SGX in BIOS.
+
+Currently, SGX SDK and SGX PSW can only be built on target. Here are the steps.
+
+1) Include feature/intel-x86-dev in your WRLinux image.
+
+2) On target:
+
+    Install dependent packages ocaml and ocamlbuild.
+    $ wget https://github.com/ocaml/ocaml/archive/refs/tags/4.13.0.tar.gz
+    $ tar -zxf 4.13.0.tar.gz
+    $ cd ocaml-4.13.0/
+    $ ./configure
+    $ make world.opt
+    $ make install
+
+    $ wget https://github.com/ocaml/ocamlbuild/archive/refs/tags/0.14.0.tar.gz
+    $ tar -zxf 0.14.0.tar.gz
+    $ cd ocamlbuild-0.14.0/
+    $ make
+    $ make install
+
+    Clone linux-sgx.
+    $ git clone https://github.com/intel/linux-sgx.git
+
+    $ cd linux-sgx/
+    $ git reset --hard 984f3c9fe809b8d0acfb0b0934087c240ecf280f
+
+    You may change "wget" to "wget --no-check-certificate" depending on your network settings.
+
+    $ make preparation
+    $ ln -s /usr/bin/python3  /usr/bin/python
+    $ make sdk_install_pkg
+
+    Install SGX SDK to "/opt/intel".
+    $ ./linux/installer/bin/sgx_linux_x64_sdk_2.18.100.3.bin
+      Do you want to install in current directory? [yes/no] : no
+      Please input the directory which you want to install in : /opt/intel
+
+    $ make psw_install_pkg
+
+    Install SGX PSW.
+    $ ./linux/installer/bin/sgx_linux_x64_psw_2.18.100.3.bin
+
+3) Reboot target.
+
+4) Check Intel architectural enclave service manager.
+
+    $ systemctl status aesmd.service
+
+5) You can build and run samples in /opt/intel/sgxsdk/SampleCode. For example:
+
+    $ cd /opt/intel/sgxsdk/SampleCode/SampleEnclave
+    $ make
+    $ ./app
+      Checksum(0x0x7ffed440cca0, 100) = 0xfffd4143
+      Info: executing thread synchronization, please wait...
+      Info: SampleEnclave successfully returned.
+      Enter a character before exit ...
+
+#@TYPE: Wrtemplate
+#@NAME: intel-sgx
+#@DESCRIPTION: Add sgx drivers to the image
