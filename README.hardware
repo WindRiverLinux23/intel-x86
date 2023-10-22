@@ -17,11 +17,13 @@ This BSP supports the following boards:
 	+ Intel Ice Lake-SP: 3rd Gen Intel(R) Xeon(R) Scalable processor
 	+ Intel Snow Ridge: Intel Atom(R) P5362 processor
 	+ Intel Elkhart Lake: Intel Atom(R) x6425RE Processor
+	+ Intel Grand Ridge: Intel Atom(R) P6962 processor
 
 2. Change History
 =================
 
-	- 2023/10 (LINUXPG-1705) Remove Grand Ridge Simics support
+	- 2023/10 (LINUXPG-1705) Add Grand Ridge support
+	          Remove Grand Ridge Simics support
 	- 2022/11 (LINUXPG-1347) Add Grand Ridge Simics support
 	- 2021/07 (LINUXPG-828) (LINUXPG-654) Add Elkhart Lake support
 	- 2021/05 (LINUXPG-658) Add Snow Ridge NS support
@@ -542,3 +544,81 @@ acpi-cpufreq, nor by intel_pstate.
     I2C7      <Host owned with pin muxed>
     CAN0      <Host owned with pin muxed>
     CAN1      <Host owned with pin muxed>
+
+3.6 Intel Grand Ridge
+---------------------
+
+3.6.1 Validated Board Info
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This BSP is only validated in following environment. If you use this BSP
+in a different environment it may have some issues.
+
+[BIOS Info]
+	Vendor: Intel Corporation
+	Version: LVLDCRB1.86B.0021.D62.2308180113
+	Release Date: 08/18/2023
+
+[RDK Info]
+	GrandRidge Release Version 23.09
+
+[CPU Info]
+	CPU family      : 6
+	Model           : 182
+	Model name      : Intel Atom(R) P6962 processor
+	Stepping        : 2
+	Microcode       : 0xf63f1001
+
+[Board Info]
+	Loganville BTS Travertine Falls Reference Platform
+
+3.6.2 Supported Features
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+	o Bus
+		+ PCI-Express
+		+ I2C/SMBus
+				+ Intel Corporation Device [8086:1bc9] (rev 11)
+
+	o Network
+		+ Intel Corporation I210 Gigabit Network Connection [8086:1533] (rev 03)
+		+ Intel Corporation Device [8086:0dbd] (rev 02)
+
+	o USB
+		+ Intel Corporation Device [8086:1bcd] (rev 11)
+
+	o Storage
+		+ SATA controller: Intel Corporation Device 1bf2 (rev 11)
+
+	o Power Management
+		+ CPU Freq: ACPI P-state
+		+ CPU Idle: ACPI C-state
+		+ ACPI S0
+		+ ACPI S4
+
+	o DLB(a.k.a HQM) -- Dynamic Load Balancer
+		+ Co-processor [0b40]: Intel Corporation Device [8086:2714]
+
+	o Intel QuickAssist Technology
+		+ Co-processor [0b40]: Intel Corporation Device [8086:578a] (rev 02)
+
+	o Intel Speed Select Technology interface
+		+ System peripheral [0880]: Intel Corporation Device [8086:3251]
+
+	o Intel Data Accelerators
+		+ System peripheral [0880]: Intel Corporation Device [8086:0b25]
+
+	o Misc Devices
+		+ UART: 8250/16550A compatible serial port
+		+ RTC: PC-style CMOS RTC
+		+ Watchdog: Intel PCH TCO device
+		+ HW Monitor: Intel CPU core temperature sensor
+
+	o TPM2.0
+		+ IFX0785:00: 2.0 TPM (device-id 0x1B, rev-id 22)
+
+3.6.3 Notes
+~~~~~~~~~~~
+
+1) Must build with feature/intel-rdk.
+2) Default console serial port is ttyS4 at MMIO 0xfe03e000.
