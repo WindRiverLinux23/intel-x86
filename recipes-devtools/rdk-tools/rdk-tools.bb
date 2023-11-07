@@ -12,6 +12,7 @@ SRC_URI = "${RDK_TOOLS_SOURCE} \
            file://rdk-grr-add-missing-unused-meson-option.patch \
            file://rdk-grr-change-IES_UNSUPPORTED-macro-to-be-deprecate.patch \
            file://rdk-grr-change-to-for-KBUILD_EXTRA_SYMBOLS.patch \
+           file://rdk-grr-replace-obsolete-interface-u64_stats_fetch_b.patch \
           "
 
 # Define this if the files exist.  Usually done in a template.

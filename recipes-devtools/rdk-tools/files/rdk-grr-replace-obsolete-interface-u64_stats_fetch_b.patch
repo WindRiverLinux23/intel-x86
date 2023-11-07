@@ -1,0 +1,44 @@
+From a909bb265a6ec7aa003da6d9d97ac42ee8ea63a7 Mon Sep 17 00:00:00 2001
+From: Yongxin Liu <yongxin.liu@windriver.com>
+Date: Tue, 7 Nov 2023 08:59:48 +0800
+Subject: [PATCH] rdk/grr: replace obsolete interface
+ u64_stats_fetch_begin_irq()
+
+In mainline kernel commit 44b0c2957adc ("u64_stats: Streamline the
+implementation"), u64_stats_fetch_begin_irq() was marked as obsolete
+interface, and will be replaced by u64_stats_fetch_begin().
+
+RT kernel v6.1 went further and removed u64_stats_fetch_begin_irq()
+totally, which causes the following error.
+
+rdk/klm/cpk/ice_main.c:6157:25: error: implicit declaration of function
+'u64_stats_fetch_begin_irq'; did you mean 'u64_stats_fetch_begin'?
+[-Werror=implicit-function-declaration]
+
+Upstream-Status: Inappropriate [RDK is released in tarball only]
+
+Signed-off-by: Yongxin Liu <yongxin.liu@windriver.com>
+---
+ klm/cpk/ice_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/klm/cpk/ice_main.c b/klm/cpk/ice_main.c
+index 2779f97..44c7b43 100644
+--- a/klm/cpk/ice_main.c
++++ b/klm/cpk/ice_main.c
+@@ -6154,10 +6154,10 @@ ice_fetch_u64_stats_per_ring(struct ice_ring *ring, u64 *pkts, u64 *bytes)
+ 	if (!ring)
+ 		return;
+ 	do {
+-		start = u64_stats_fetch_begin_irq(&ring->syncp);
++		start = u64_stats_fetch_begin(&ring->syncp);
+ 		*pkts = ring->stats.pkts;
+ 		*bytes = ring->stats.bytes;
+-	} while (u64_stats_fetch_retry_irq(&ring->syncp, start));
++	} while (u64_stats_fetch_retry(&ring->syncp, start));
+ }
+ 
+ /**
+-- 
+2.39.2
+
