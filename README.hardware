@@ -728,7 +728,10 @@ templates/feature/intel-sgx/README first.
 
 3) Default console serial port is ttyS0 at I/O 0x3f8.
 
-4) See Common Known Issues 1).
+3.7.5 Known Issue
+~~~~~~~~~~~~~~~~~
+
+See Common Known Issues 2).
 
 4. Common Known Issues
 ======================
@@ -742,3 +745,10 @@ BOIS sets [mem 0x80000000-0x8fffffff] as uncached range for PCI MMCONFIG. It is 
 extended PCIe configuration space.
 
 You may add "nohugeiomap" to kernel boot command line to disable I/O huge page mapping.
+
+2) PMEM DAX (direct access to persistent memory) is not supported on RT kenrel.
+Because DEV_DAX_PMEM has the following dependencies.
+
+    DEV_DAX_PMEM depends on LIBNVDIMM && NVDIMM_DAX && DEV_DAX
+    DEV_DAX depends on TRANSPARENT_HUGEPAGE
+    TRANSPARENT_HUGEPAGE depends on HAVE_ARCH_TRANSPARENT_HUGEPAGE && !PREEMPT_RT_FULL
