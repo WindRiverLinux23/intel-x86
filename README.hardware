@@ -136,13 +136,14 @@ The following features are not supported or validated:
 ~~~~~~~~~~~~~~~~~~
 
 1) boot error: thermal thermal_zone3: failed to read out thermal zone
-   It is the known upstream issue, reported in upstream:
+
+It is the known upstream issue, reported in upstream:
    https://bugzilla.kernel.org/show_bug.cgi?id=201761
-   will trace its new status.
+will trace its new status.
 
 2) boot error: [drm] failed to retrieve link info, disabling eDP
-   No screen connect to eDP will cause the above error, mark it
-   as un-validated feature.
+
+No screen connect to eDP will cause the above error, mark it as un-validated feature.
 
 3.2 Intel Tiger Lake UP3
 ------------------------
@@ -324,20 +325,22 @@ in a different environment it may possibly have some issues.
 ~~~~~~~~~~~
 
 1) About SMBus and Watchdog, it highly depends on the BIOS/Firmware/Hardware
-   configurations. Just because they aren't supported on our validated board
-   doesn't mean your own board doesn't support it either.
+configurations. Just because they aren't supported on our validated board
+doesn't mean your own board doesn't support it either.
 
 2) Add "tpm_tis.interrupts=0" to kernel command line, if your TPM device doesn't
-   support interrupt.
+support interrupt.
 
 3.4 Intel Snow Ridge NS Mode
 ----------------------------
+
 Intel Snow Ridge Network Series (NS) System-on-a-Chip (SoC) product family
 is Intel's next generation of communication processors based on Intel 10 nm
 process technology.
 
 3.4.1 Validated Board Info
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 This BSP is only validated in following environment. If you use this BSP
 in a different environment it may have some issues.
 
@@ -423,33 +426,27 @@ serial port according to your hardware.
 1) Serial port console may be not resumed after system comes back from APCI S4.
 Use the following commands to restore.
 
-        root@intel-x86-64:~# systemctl restart serial-getty@ttyS0.service
+    root@intel-x86-64:~# systemctl restart serial-getty@ttyS0.service
 
 2) If you see below output from kernel or similar message after resuming from suspend,
 
-        ice 0000:ec:00.1: control queues init failed ICE_ERR_AQ_TIMEOUT
-        ice 0000:ec:00.1: Rebuild failed, unload and reload driver
+    ice 0000:ec:00.1: control queues init failed ICE_ERR_AQ_TIMEOUT
+    ice 0000:ec:00.1: Rebuild failed, unload and reload driver
 
 do "rmmod ice; modprobe ice" to unload and reload ice driver as kernel said, otherwise you
 may suffer malfunctional ice NIC.
 
-3) In kernel booting log, you may see "pmd_set_huge: Cannot satisfy [mem 0x80000000-0x80200000]
-with a huge-page mapping due to MTRR override.". This message is a harmless warning. It just
-shows that the I/O remapping code can't set up huge page mapping due to MTRR override and it
-will fall back to use a smaller page size of 4KB.
-
-BOIS sets [mem 0x80000000-0x8fffffff] as uncached range for PCI MMCONFIG. It is used to access
-extended PCIe configuration space.
-
-You may add "nohugeiomap" to kernel boot command line to disable I/O huge page mapping.
+3) See Common Known Issues 1).
 
 3.5 Intel Elkhart Lake
 ----------------------
+
 Intel Atom x6000E Series, and Intel Prentinum and Celeron N and J series Processors for Internet
 of Things(IoT) Applications.
 
 3.5.1 Validated Board Info
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 This BSP is only validated in following environment. If you use this BSP
 in a different environment it may have some issues.
 
@@ -625,13 +622,20 @@ in a different environment it may have some issues.
 1) Must build with feature/intel-rdk.
 2) Default console serial port is ttyS4 at MMIO 0xfe03e000.
 
+3.6.4 Known Issue
+~~~~~~~~~~~~~~~~~
+
+See Common Known Issues 1).
+
 3.7 Intel Sapphire Rapids
 -------------------------
+
 Sapphire Rapids is the codename for Intel 4th Gen Xeon Scalable Processor, and it is a part of
 the Eagle Stream server platform.
 
 3.7.1 Validated Board Info
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 This BSP is only validated in the following environment. If you use this BSP
 in a different environment it may have some issues.
 
@@ -701,6 +705,7 @@ in a different environment it may have some issues.
 
 3.7.3 Unsupported Feature
 ~~~~~~~~~~~~~~~~~~~~~~~~~
+
 The following feature is not supported or validated.
 
   x Audio device [0403]: Intel Corporation Device [8086:1bc8]
@@ -722,3 +727,18 @@ dependent packages.
 templates/feature/intel-sgx/README first.
 
 3) Default console serial port is ttyS0 at I/O 0x3f8.
+
+4) See Common Known Issues 1).
+
+4. Common Known Issues
+======================
+
+1) In kernel booting log, you may see "pmd_set_huge: Cannot satisfy [mem 0x80000000-0x80200000]
+with a huge-page mapping due to MTRR override.". This message is a harmless warning. It just
+shows that the I/O remapping code can't set up huge page mapping due to MTRR override and it
+will fall back to use a smaller page size of 4KB.
+
+BOIS sets [mem 0x80000000-0x8fffffff] as uncached range for PCI MMCONFIG. It is used to access
+extended PCIe configuration space.
+
+You may add "nohugeiomap" to kernel boot command line to disable I/O huge page mapping.
