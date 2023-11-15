@@ -58,7 +58,7 @@ Corporation HD Graphics 620.
 3.1.1 Validated Board Info
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This BSP is only validated in following environment. If you use this BSP
+This BSP is only validated in the following environment. If you use this BSP
 in a different environment it may possibly have some issues.
 
 [Board info]
@@ -155,7 +155,7 @@ It combines Intel Iris Xe Graphics PCI Express 4.0 and Thunderbolt(TM)4/USB4.
 3.2.1 Validated Board Info
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This BSP is only validated in following environment. If you use this BSP
+This BSP is only validated in the following environment. If you use this BSP
 in a different environment it may possibly have some issues.
 
 [BIOS Info]
@@ -253,7 +253,7 @@ built on 10nm process, as the successor to Cascade Lake-SP.
 3.3.1 Validated Board Info
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This BSP is only validated in following environment. If you use this BSP
+This BSP is only validated in the following environment. If you use this BSP
 in a different environment it may possibly have some issues.
 
 [Board info]
@@ -341,7 +341,7 @@ process technology.
 3.4.1 Validated Board Info
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This BSP is only validated in following environment. If you use this BSP
+This BSP is only validated in the following environment. If you use this BSP
 in a different environment it may have some issues.
 
 [BIOS Info]
@@ -447,7 +447,7 @@ of Things(IoT) Applications.
 3.5.1 Validated Board Info
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This BSP is only validated in following environment. If you use this BSP
+This BSP is only validated in the following environment. If you use this BSP
 in a different environment it may have some issues.
 
 [BIOS Info]
@@ -550,7 +550,7 @@ acpi-cpufreq, nor by intel_pstate.
 3.6.1 Validated Board Info
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This BSP is only validated in following environment. If you use this BSP
+This BSP is only validated in the following environment. If you use this BSP
 in a different environment it may have some issues.
 
 [BIOS Info]
@@ -601,9 +601,6 @@ in a different environment it may have some issues.
 	o Intel QuickAssist Technology
 		+ Co-processor [0b40]: Intel Corporation Device [8086:578a] (rev 02)
 
-	o Intel Speed Select Technology interface
-		+ System peripheral [0880]: Intel Corporation Device [8086:3251]
-
 	o Intel Data Accelerators
 		+ System peripheral [0880]: Intel Corporation Device [8086:0b25]
 
@@ -616,13 +613,29 @@ in a different environment it may have some issues.
 	o TPM2.0
 		+ IFX0785:00: 2.0 TPM (device-id 0x1B, rev-id 22)
 
-3.6.3 Notes
+3.6.3 Unsupported Features
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following feature is not supported or validated.
+
+  x Intel Speed Select Technology Interface
+  x Intel RAPL (Running Average Power Limit)
+  x Intel Uncore Performance Events
+
+1) According to Chapter 15 of Intel Grand Ridge EDS Volume2 Rev. 1.0, the Loganville
+platform doesn't support Intel SST.
+
+2) There is no support for Intel RAPL on Grand Ridge in mainline kernel (v6.7-rc1).
+
+3) There is no support for uncore performance events on Grand Ridge in mainline kernel (v6.7-rc1).
+
+3.6.4 Notes
 ~~~~~~~~~~~
 
 1) Must build with feature/intel-rdk.
 2) Default console serial port is ttyS4 at MMIO 0xfe03e000.
 
-3.6.4 Known Issue
+3.6.5 Known Issue
 ~~~~~~~~~~~~~~~~~
 
 See Common Known Issues 1).
@@ -746,7 +759,7 @@ extended PCIe configuration space.
 
 You may add "nohugeiomap" to kernel boot command line to disable I/O huge page mapping.
 
-2) PMEM DAX (direct access to persistent memory) is not supported on RT kenrel.
+2) PMEM DAX (direct access to persistent memory) is not supported on RT kernel.
 Because DEV_DAX_PMEM has the following dependencies.
 
     DEV_DAX_PMEM depends on LIBNVDIMM && NVDIMM_DAX && DEV_DAX
