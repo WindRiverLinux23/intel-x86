@@ -19,10 +19,12 @@ This BSP supports the following boards:
 	+ Intel Elkhart Lake: Intel Atom(R) x6425RE Processor
 	+ Intel Grand Ridge: Intel Atom(R) P6962 processor
 	+ Intel Sapphire Rapids: Intel Xeon(R) Platinum 8468H
+	+ Intel Coffee Lake S: Intel(R) Core(TM) i7-8700
 
 2. Change History
 =================
 
+	- 2023/12 (LINUXPG-1708) Add Coffee Lake S support
 	- 2023/10 (LINUXPG-1704) Add Sapphire Rapids support
 	- 2023/10 (LINUXPG-1705) Add Grand Ridge support
 	          Remove Grand Ridge Simics support
@@ -745,6 +747,142 @@ templates/feature/intel-sgx/README first.
 ~~~~~~~~~~~~~~~~~
 
 See Common Known Issues 2).
+
+3.8 Intel Coffee Lake S
+-----------------------
+
+The 8th generation Intel Core processors introduce 6-core processors for performance-demanding
+applications. These processors are manufactured on Intel's 14nm technology.
+
+3.8.1 Validated Board Info
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This BSP is only validated in the following environment. If you use this BSP
+in a different environment it may have some issues.
+
+[BIOS Info]
+	Vendor: Intel Corporation
+	Version: CNLSFWR1.R00.X118.B19.1802080131
+	Release Date: 02/08/2018
+
+[Processor Info]
+	BIOS Model name:     Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz
+	BIOS CPU family:     198
+	CPU family:          6
+	Model:               158
+	Thread(s) per core:  2
+	Core(s) per socket:  6
+	Socket(s):           1
+	Stepping:            10
+
+[Board Info]
+	CFL-S DDR4 UDIMM CRB FAB1
+
+3.8.2 Supported Features
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+	o Bus
+		+ PCI-Express
+		+ I2C/SMBus
+			+ Intel Corporation Cannon Lake PCH SMBus Controller [8086:a323] (rev 10)
+
+	o Network
+		+ Intel E1000E Gigabit Ethernet
+			+ Intel Corporation Ethernet Connection (7) I219-V [8086:15bc] (rev 10)
+		+ WiFi & Bluetooth
+			+ M.2 Key E: Intel Corporation Dual Band Wireless-AC 9560NGW adapter with Bluetooth
+
+	o USB
+		+ Intel Corporation Cannon Lake PCH USB 3.1 xHCI Host Controller [8086:a36d] (rev 10)
+
+	o Storage
+		+ Intel Corporation Cannon Lake PCH SATA AHCI Controller [8086:a352] (rev 10)
+			+ Standard SATA interface
+			+ SATA M.2 SSD
+
+	o Power Management
+		+ CPU Freq: ACPI P-state
+		+ CPU Idle: ACPI C-state
+		+ ACPI S0
+		+ ACPI S4
+
+	o Multimedia
+		+ Graphics: Intel Corporation CoffeeLake-S GT2 [UHD Graphics 630] [8086:3e92]
+			+ eDP
+			+ DP
+			+ HDMI
+		+ Audio:
+			+ Intel Corporation Cannon Lake PCH cAVS [8086:a348] (rev 10)
+				+ Audio Codec - ALC700
+				+ Audio via DP
+
+	o Misc Devices
+		+ UART: 8250/16550A compatible serial port
+		+ Input device
+			+ USB mouse & keyboard
+		+ Watchdog: Intel TCO timer
+
+3.8.3 Unsupported Features
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following features are not supported or validated:
+
+	x EDAC
+	x USB Type-C
+	x ACPI S3
+	x Audio via HDMI
+	x Audio: SPDIF Optical
+	x SD Host Controller
+
+1) EDAC ie31200: No ECC memory installed on CFL-S CRB.
+
+2) USB Type-C is not supported by hardware.
+
+3) System cannot wake up from ACPI S3 sleep mode. This feature highly depends on BIOS implementation.
+Since we are using the pre-production BIOS, you may not meet this issue on your board.
+
+4) We cannot get audio from HDMI port on our board. There is LSPCON MC2800 between processor and HDMI port.
+Probably because the firmware of MC2800 is too low. We are looking for the FW update.
+
+5) Currently we don't have devices to test SPDIF.
+
+6) There is no SD card socket on CFL-S CRB.
+
+3.8.4 Note
+~~~~~~~~~~
+
+The default console serial port is ttyS0 at I/O 0x3f8.
+
+3.8.5 Known Issues
+~~~~~~~~~~~~~~~~~~
+
+1) You may see the following output from kernel.
+
+   mmc0: SDHCI controller on PCI [0000:00:14.5] using ADMA
+   mmc0: Timeout waiting for hardware cmd interrupt.
+   mmc0: sdhci: ============ SDHCI REGISTER DUMP ===========
+   mmc0: sdhci: Sys addr:  0x00000000 | Version:  0x00001002
+   mmc0: sdhci: Blk size:  0x00000000 | Blk cnt:  0x00000000
+   mmc0: sdhci: Argument:  0x00000000 | Trn mode: 0x00000000
+   mmc0: sdhci: Present:   0x21ff0001 | Host ctl: 0x00000000
+   mmc0: sdhci: Power:     0x0000000f | Blk gap:  0x00000080
+   mmc0: sdhci: Wake-up:   0x00000000 | Clock:    0x0000e8c3
+   mmc0: sdhci: Timeout:   0x00000000 | Int stat: 0x00000000
+   mmc0: sdhci: Int enab:  0x00ff0003 | Sig enab: 0x00ff0003
+   mmc0: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
+   mmc0: sdhci: Caps:      0x2568c881 | Caps_1:   0x18000807
+   mmc0: sdhci: Cmd:       0x0000371a | Max curr: 0x00000000
+   mmc0: sdhci: Resp[0]:   0x00000000 | Resp[1]:  0x00000000
+   mmc0: sdhci: Resp[2]:   0x00000000 | Resp[3]:  0x00000000
+   mmc0: sdhci: Host ctl2: 0x00000000
+   mmc0: sdhci: ADMA Err:  0x00000000 | ADMA Ptr: 0x00000000
+   mmc0: sdhci: ============================================
+
+This issue is not reproducible. Since we don't have SD card support, we cannot evaluate the impact.
+If you don't have SD card either and are bothered by this message, you can disable kernel driver "sdhci-pci".
+
+2) You may see phantom monitor connected to HDMI port, when you don't actually have any HDMI monitor.
+This issue is caused by FW 1.63 of LSPCON MC2800. Please contact you hardware/system provider for the update.
 
 4. Common Known Issues
 ======================
