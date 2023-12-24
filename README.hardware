@@ -240,14 +240,7 @@ the corresponding h/w features exist.
 3.2.3 Known Issue
 ~~~~~~~~~~~~~~~~~
 
-You may see "i8042: Warning: Keylock active" in kernel log. The warning comes from
-kernel if the bit 4 of the Status Register of PS2 controller is not "1". That bit
-is chipset specific and may have different meanings for different vendor. Or that
-bit was wrongly set by BIOS/ACPI.
-
-As long as the PS2 keyboard and PS2 mouse are working as normal, the warning can be
-ignored. If you don't want to see this warning in kernel log, you can add "i8042.unlock"
-to kernel boot command line.
+See Common Known Issues 3).
 
 3.3 Intel Ice Lake-SP
 ---------------------
@@ -887,6 +880,8 @@ If you don't have SD card either and are bothered by this message, you can disab
 2) You may see phantom monitor connected to HDMI port, when you don't actually have any HDMI monitor.
 This issue is caused by FW 1.63 of LSPCON MC2800. Please contact you hardware/system provider for the update.
 
+3) See Common Known Issues 3).
+
 3.9 Intel Idaville LCC(Ice-D SoC)
 ---------------------------------
 
@@ -1076,3 +1071,12 @@ Because DEV_DAX_PMEM has the following dependencies.
     DEV_DAX_PMEM depends on LIBNVDIMM && NVDIMM_DAX && DEV_DAX
     DEV_DAX depends on TRANSPARENT_HUGEPAGE
     TRANSPARENT_HUGEPAGE depends on HAVE_ARCH_TRANSPARENT_HUGEPAGE && !PREEMPT_RT_FULL
+
+3) You may see "i8042: Warning: Keylock active" in kernel log. The warning comes from
+kernel if the bit 4 of the Status Register of PS2 controller is not "1". That bit
+is chipset specific and may have different meanings for different vendor. Or that
+bit was wrongly set by BIOS/ACPI.
+
+As long as the PS2 keyboard and PS2 mouse are working as normal, the warning can be
+ignored. If you don't want to see this warning in kernel log, you can add "i8042.unlock"
+to kernel boot command line.
