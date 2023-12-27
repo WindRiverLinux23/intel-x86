@@ -972,7 +972,7 @@ The following features are not supported or validated:
 3.10 Intel Idaville HCC(Ice-D SoC)
 ----------------------------------
 
-Intel Idaville LCC featuring Intel Xeon D Processor, specifically at edge
+Intel Idaville HCC featuring Intel Xeon D Processor, specifically at edge
 of Data Center and Network, with support of QAT, 100G throughput Ethernet.
 
 3.10.1 Validated Board Info
