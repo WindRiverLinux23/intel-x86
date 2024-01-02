@@ -22,10 +22,12 @@ This BSP supports the following boards:
 	+ Intel Coffee Lake S: Intel(R) Core(TM) i7-8700
 	+ Intel Idaville LCC: Intel Xeon D Processors, Ice Lake-D SoC, (IOTG: Brighton City)
 	+ Intel Idaville HCC: Intel Xeon D Processors, Ice Lake-D SoC, (Moro City)
+	+ Advantech Server Board: 2nd generation Intel Xeon Scalable Processors, (Products formerly Cascade Lake)
 
 2. Change History
 =================
 
+	- 2024/01 (LINUXPG-1801) Add Cascade Lake support
 	- 2023/12 (LINUXPG-1710) Add Icelake-D support
 	- 2023/12 (LINUXPG-1708) Add Coffee Lake S support
 	- 2023/10 (LINUXPG-1704) Add Sapphire Rapids support
@@ -967,7 +969,6 @@ The following features are not supported or validated:
 ~~~~~~~~~~~
 1) 4xSFP is not enabled by default, flash 100G_8x10G NVM image can enable it.
 
-
 3.10 Intel Idaville HCC(Ice-D SoC)
 ----------------------------------
 
@@ -1051,6 +1052,84 @@ For S3/S4, Intel has no plan to support it on this board.
 3.10.4 Notes
 ~~~~~~~~~~~~
 1) only 1 QSFP is enabled by default, flash 8x10_QSFP or 2x100_QSFP NVM image can enable another one.
+
+3.11 Advantech Server Board(Cascade Lake)
+-----------------------------------------
+Advantech EATX Server Board featuring 2nd generation Intel Xeon Scalable
+Processors, base board is from Advantech with x8 and x16 PCIe, dual 10GbE ports.
+
+3.11.1 Validated Board Info
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This BSP is only validated in the following environment. If you use this BSP
+in a different environment it may have some issues.
+
+[BIOS Info]
+	Vendor: American Megatrends Inc.
+	Version: 5.14
+	Release Date: 08/22/2022
+
+[CPU Info]
+	processor       : 41
+	vendor_id       : GenuineIntel
+	cpu family      : 6
+	model           : 85
+	model name      : Intel(R) Xeon(R) Gold 5218 CPU @ 2.30GHz
+	stepping        : 7
+	microcode       : 0x500002b
+
+[Chipset Info]
+	Intel C620 Series
+
+[Board Info]
+	ASMB-935T2-00A1
+
+3.11.2 Supported Features
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	o General Platform
+		+ perf: H/W based PMU
+
+	o Bus
+		+ PCI-Express
+		+ SMBus:
+			+ Intel Corporation C620 Series Chipset Family SMBus [8086:a1a3] (rev 09)
+
+	o Network
+		+ Intel Gigabit Ethernet:
+			+ Intel Corporation I210 Gigabit Network Connection [8086:1533] (rev 03)
+		+ Intel I40E Ethernet:
+			+ Intel Corporation Ethernet Connection X722 for 10GBASE-T [8086:37d2] (rev 09)
+
+	o USB
+		+ USB 3.0 XHCI controller
+			+ Intel Corporation C620 Series Chipset Family USB 3.0 xHCI Controller [8086:a1af] (rev 09) (prog-if 30 [XHCI])
+
+	o Storage
+		+ SATA3
+
+	o Multimedia
+		+ Graphics:
+			+ ASPEED Technology, Inc. ASPEED Graphics Family [1a03:2000] (rev 41) (prog-if 00 [VGA controller])
+
+	o Power Management
+		+ Suspend to IDLE: ACPI S0
+		+ Suspend to DISK: ACPI S4
+		+ CPU Freq: ACPI P-state
+		+ CPU Idle: ACPI C-state
+
+	o Misc Devices
+		+ RTC: PC-style CMOS RTC
+		+ Input device
+		+ USB mouse & keyboard
+		+ HW Monitor: Intel CPU core temperature sensor
+
+3.11.3 Unsupported Feature
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following feature is not supported or validated:
+
+	x Hardware Watchdog (Not enabled by BIOS)
 
 4. Common Known Issues
 ======================
