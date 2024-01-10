@@ -23,10 +23,12 @@ This BSP supports the following boards:
 	+ Intel Idaville LCC: Intel Xeon D Processors, Ice Lake-D SoC, (IOTG: Brighton City)
 	+ Intel Idaville HCC: Intel Xeon D Processors, Ice Lake-D SoC, (Moro City)
 	+ Advantech Server Board: 2nd generation Intel Xeon Scalable Processors, (Products formerly Cascade Lake)
+	+ Intel Harcuvar platform: Atom Processor, Denverton-NS SoC, (Harcuvar)
 
 2. Change History
 =================
 
+	- 2024/01 (LINUXPG-1988) Add Denverton-NS support
 	- 2024/01 (LINUXPG-1801) Add Cascade Lake support
 	- 2023/12 (LINUXPG-1710) Add Icelake-D support
 	- 2023/12 (LINUXPG-1708) Add Coffee Lake S support
@@ -1130,6 +1132,85 @@ in a different environment it may have some issues.
 The following features are not supported and not validated:
 
 	x Hardware Watchdog (Not enabled by BIOS)
+
+3.12 Intel Harcuvar(Denverton-NS)
+---------------------------------
+
+Harcuvar belongs to Denverton SoC Product Family, with support of DDR4, 4x SFP+
+and QAT.
+
+3.12.1 Validated Board Info
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This BSP is only validated in the following environment. If you use this BSP
+in a different environment it may possibly have some issues.
+
+[BIOS info]
+	BIOS Version: HAVLCRB1.X64.0015.D62.1708310404
+
+[Processor info]
+	Codename	: Denverton-NS
+	vendor_id       : GenuineIntel
+	Core		: 16
+	ID		: 0x506F0
+	Stepping	: 1
+	Microcode Rev	: 0x10
+
+[Board info]
+	Platform: Intel Harcuvar
+
+3.12.2 Supported Features
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following BSP features are validated and supported.
+
+	o Bus
+		+ PCI-Express
+		+ SMBus:
+			+ Intel Corporation Atom Processor C3000 Series SMBus controller [8086:19df] (rev 10)
+
+	o Network
+		+ Intel Gigabit Ethernet
+			+ Intel Corporation I210 Gigabit Network Connection [8086:1533] (rev 03)
+		+ Intel IXGBE Ethernet:
+			+ Intel Corporation Ethernet Connection X553 10 GbE SFP+ [8086:15ce] (rev 10)
+
+	o USB
+		+ USB 2.0 EHCI controller
+		+ USB 3.0 XHCI controller
+			+ Intel Corporation Atom Processor C3000 Series USB 3.0 xHCI Controller [8086:19d0] (rev 10) (prog-if 30 [XHCI])
+
+	o Storage
+		+ SATA: AHCI SATA controller
+			+ Intel Corporation Atom Processor C3000 Series SATA Controller 1 [8086:19c2] (rev 10) (prog-if 01 [AHCI 1.0])
+		+ eMMC card:
+			+ SD Host controller [0805]: Intel Corporation Device [8086:19db] (rev 01) (prog-if 01)
+
+	o Misc Devices
+		+ UART: 8250/16550A compatible serial port
+			+ Intel Corporation Atom Processor C3000 Series HSUART Controller [8086:19d8] (rev 10) (prog-if 02 [16550]
+		+ Input device
+			+ USB mouse & keyboard
+		+ Hardware Watchdog
+			+ Intel iTCO H/W Watchdog Timer
+
+	o Intel QuickAssist Technology (QAT)
+		+ Co-processor [0b40]: Intel Corporation Atom Processor C3000 Series QuickAssist Technology [8086:19e2] (rev 10)
+
+3.12.3 Unsupported Features
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following features are not supported and not validated.
+
+	x Suspend to Memory (ACPI S3) (Not supported by BIOS)
+	x SPI (Hardware Sequencing Flash Status Control register isn't well configured in BIOS, timeout when read/write)
+
+3.12.4 Notes
+~~~~~~~~~~~~
+
+1) To enable EDAC feature, you need enable "Relax Security Configuration" in BIOS:
+
+	EDKII -> Security -> Relax Security Configuration
 
 4. Common Known Issues
 ======================
