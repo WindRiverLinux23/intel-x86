@@ -1072,7 +1072,6 @@ in a different environment it may have some issues.
 	Release Date: 08/22/2022
 
 [CPU Info]
-	processor       : 41
 	vendor_id       : GenuineIntel
 	cpu family      : 6
 	model           : 85
